@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace ScreensaverFramework
 {
@@ -19,6 +20,9 @@ namespace ScreensaverFramework
         Bitmap currentImage;
         private Font frameFont;
         private SolidBrush frameSolidBrush;
+        DateTime preIterate;
+        DateTime postIterate;
+        TimeSpan timeToWait;
 
         public Form1()
         {
@@ -95,20 +99,29 @@ namespace ScreensaverFramework
             {
                 setUpIterator();
             }
-            else {
-                screensaver.iterate();
-            }
+            preIterate = DateTime.Now;
+            screensaver.iterate();
             currentImage = screensaver.draw();
+            int framerate = screensaver.getFrameRate();
+            if(framerate > 0)
+            {
+                postIterate = DateTime.Now;
+                timeToWait = (TimeSpan.FromSeconds(1.0 / (double)framerate).Subtract(postIterate.Subtract(preIterate)));
+                if(timeToWait.CompareTo(TimeSpan.Zero) >= 0)
+                {
+                    Thread.Sleep(timeToWait);
+                }
+            }
         }
 
         private void setUpIterator()
         {
-            //FractalIterator = new MandelbrotIterativeDrawer(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, -2.5, 1.0, -1.0, 1.0);
             screensaver.setUp();
         }
 
         private async void runScreenSaver()
         {
+            chooseScreensaver();
             setUpIterator();
             while (true)
             {
@@ -135,9 +148,9 @@ namespace ScreensaverFramework
 
         }
 
-        private void chooseScreensaver()
+        public void chooseScreensaver()
         {
-            //screensaver = new ScreenSaverIterator();
+            screensaver = ScreenSaverManager.getNewScreensaver(Screen.PrimaryScreen.Bounds.Width,Screen.PrimaryScreen.Bounds.Height);
         }
 
     }
