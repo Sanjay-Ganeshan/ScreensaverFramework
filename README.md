@@ -23,8 +23,10 @@ An example of the lines program running:
 An example of the Mandelbrot program running:
 ![Mandelbrot]
 
-[Lines]: ./Lines.gif
-[Mandelbrot]: ./Mandelbrot.gif
+[Lines]:  
+./Lines.gif
+[Mandelbrot]:  
+./Mandelbrot.gif
 [Mandelbrot on Wikipedia]:  https://en.wikipedia.org/wiki/Mandelbrot_set
 
 ##Requirements
