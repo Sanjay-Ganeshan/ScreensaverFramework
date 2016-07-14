@@ -18,9 +18,11 @@ It also includes a couple demo screensavers
 + Mandelbrot draws a Mandelbrot set, coloring each point based on the number of iterations until it is proven not to be in the set \(See [Mandelbrot on Wikipedia][] for more information\)
 
 An example of the lines program running:
+
 ![Lines]
 
 An example of the Mandelbrot program running:
+
 ![Mandelbrot]
 
 [Lines]:  
